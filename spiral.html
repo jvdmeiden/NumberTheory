@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Seed Spirals</title>
+<script>
+    function combo(thelist, factor) {
+        theinput = document.getElementById(factor);
+        var idx = thelist.selectedIndex;
+        var content = thelist.options[idx].innerHTML;
+        theinput.value = content;
+    }
+  </script>
+</head>
+<body id="body">
+<form>
+  <fieldset>
+    <font color="white">
+    <legend>Parameters</legend>
+    <label>ColorSteps:</label>
+  <label>Steps per color:</label>
+    <input type="number" id="inc" name="inc">
+    <select name="thelist" onChange="combo(this, 'inc')">
+      <option>1</option>
+      <option>4</option>
+      <option selected>7</option>
+      <option>10</option>
+      <option>16</option>
+    </select><br/>	
+  <label>Factor (in Javascript notation, eg Math.PI):</label>
+    <input type="text" id="factor" name="factor" />
+    <select name="thelist" onChange="combo(this, 'factor')">
+      <option>1/7</option>
+      <option selected>Math.PI</option>
+      <option>Math.sqrt(3)</option>
+      <option>(1+Math.sqrt(5))/2</option>
+      <option>Math.E</option>
+      <option>Math.sqrt(511)</option>
+    </select>
+  <p><input type="button" value="Run" onclick="submitFactor();" /><input type="button" value="Stop" onclick="stopSpiral();" /><input type="button" value="Continue" onclick="cont();" /></p>
+  </font>
+  </fieldset>
+</form>
+
+<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(10,10,10)" width="900" height="900"> 
+<!-- Author: Jan van der Meiden                                           -->
+<!-- jvdmeiden@gmail.com                                                  -->
+<!-- Version: 20141108.00                                                 -->
+<!-- Copyright (c) 2014 Jan van der Meiden.                               -->
+<!-- Copying and distribution of this file, with or without modification, -->
+<!-- are permitted in any medium without royalty provided the copyright   -->
+<!-- notice and this notice are preserved.                                -->
+
+<script><![CDATA[
+var SVGDoc = null;
+var svgns = 'http://www.w3.org/2000/svg';
+var offsetX = 450;
+var offsetY = 450;
+var myFactor = 0;
+var myInc = 0;
+var steps = 0;
+var fib = 0;
+var stop = false;
+
+function stopSpiral(){
+  stop=true;
+}
+
+function cont(){
+  stop=false;
+  tick();
+}
+
+function tick(evt){
+  steps = steps + 1; 
+  
+  NewDot = SVGDoc.createElementNS(svgns,"circle"); 
+//  var cx=Math.sqrt(steps)*Math.cos(2*Math.PI*myFactor*steps)*5;
+//  var cy=Math.sqrt(steps)*Math.sin(2*Math.PI*myFactor*steps)*5;
+  var cx=(steps/10)*Math.cos(2*Math.PI*myFactor*steps);
+  var cy=(steps/10)*Math.sin(2*Math.PI*myFactor*steps);
+  NewDot.setAttribute("cx", offsetX+cx); 
+  NewDot.setAttribute("cy", offsetY+cy); 
+//  console.log("Steps: "+steps+" Factor: "+myFactor+" cx,cy "+cx+","+cy);
+  NewDot.setAttribute("r", 2); 
+  NewDot.setAttribute("fill","rgb(255,"+parseInt((steps%myInc)*255/myInc)+","+parseInt((steps/100)%255)+")"); 
+  dotRoot.appendChild(NewDot); 
+  if ((cx*cx+cy*cy)<(offsetX*offsetX+offsetY*offsetY)&&stop==false){
+    t=setTimeout("tick()",3); 
+  }
+}   
+
+function submitFactor(evt){
+  element = document.getElementById("Dots");
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+  steps =0;
+  myFactor=(eval(document.getElementById( 'factor' ).value));
+  myInc=(eval(document.getElementById( 'inc' ).value));
+  setTimeout("tick()",5);
+}
+
+function startup(evt){
+  SVGDoc = evt.target.ownerDocument;
+  dotRoot = SVGDoc.getElementById("Dots"); 
+}
+
+function toggleField(fieldName,nameIndex){
+  var hideObj=document.getElementsByName(fieldName)[nameIndex];
+  var showObj=document.getElementsByName(fieldName)[1-nameIndex];
+  hideObj.disabled=true;        
+  hideObj.style.display='none';
+  showObj.disabled=false;   
+  showObj.style.display='inline';
+  showObj.focus();
+}
+
+]]></script> 
+ <g id="Dots">
+ </g>
+</svg> 
+
+</body>
+</html>

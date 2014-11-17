@@ -1,0 +1,156 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="1.1"
+  onload="startup(evt)"   
+  width="100%" height="100%" >  
+<!--
+  Author: Jan van der Meiden
+  jvdmeiden@googlemail.com
+  Version: 20110102.01  Copyright 2011 Jan van der Meiden.
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.-->
+<!--
+  About this SVG file:
+  It contains a number of 'layers':
+  -  A 'GridRoot' for the underlying grid to be drawn
+     I made an attempt to make it look like classic millimeter paper
+     It took some effort to put the (0,0) coordinate at the left down instead of upper corner..
+  -  A DotRoot for the dots (on top of the lines)
+  -  A TextRoot
+  -  The file contains an attempt to support resizing
+    Considering the resizing: it appears to work well in Opera 11, Minefield and IE9 Beta.
+    However when zooming out it appears the way the image is calculated becomes too compute intensive...
+-->
+
+<script type="application/ecmascript"> <![CDATA[
+  var SVGDocument = null;
+  var SVGRoot = null;
+  var count=0;
+  var svgns = 'http://www.w3.org/2000/svg';
+  var h = 0;  
+  var w = 0;  
+  var hl = 0;  
+  var wl = 0;
+
+  function startup(evt){
+    SVGDoc = evt.target.ownerDocument;   
+    GridRoot = SVGDoc.getElementById("Grid");
+    DotsRoot = SVGDoc.getElementById("Dots");
+    for (var n=2; n<30; n++) {
+      NewGroup = SVGDoc.createElementNS(svgns,"g");
+      NewGroup.setAttribute("id", "L_" + n );
+      DotsRoot.appendChild(NewGroup);
+    }
+    TextRoot = SVGDoc.getElementById("Text");
+    drawGrid(evt);
+    drawDots(evt);
+  }
+
+  function removeChildrenFromNode(node){
+    while (node.hasChildNodes()){
+      node.removeChild(node.firstChild);
+    }
+  }
+
+  function GCD(a,b){
+    if (b==0) return a;
+    return GCD(b,a%b);
+  }
+
+  function drawGrid(evt){
+    SVGDoc = evt.target.ownerDocument;
+    SVGRoot = evt.target;
+    var Box = SVGRoot.getBBox();
+    w = Box.width;
+    h = Box.height;
+    for (var y = (h-40); y > 0; y-=20){
+      NewLine = SVGDoc.createElementNS(svgns,"line");
+      NewLine.setAttribute("x1", 40);
+      NewLine.setAttribute("y1", y);
+      NewLine.setAttribute("x2", w);
+      NewLine.setAttribute("y2", y);
+      if ( (hl  % 10) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(10,10,255)");
+        NewLine.setAttribute("width", 3);
+        var data = SVGDoc.createTextNode(hl);
+        NewText = SVGDoc.createElementNS(svgns,"text");
+        NewText.setAttribute("x", 4);
+        NewText.setAttribute("y", y+16);
+        NewText.setAttribute("font-size", 16);
+        NewText.setAttribute("color", "black");
+        NewText.setAttribute("font-family", "arial");
+        NewText.appendChild(data);
+        TextRoot.appendChild(NewText);
+      } else if ( (hl  % 5) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(120,120,255)");
+        NewLine.setAttribute("width", 2);
+      } else {
+        NewLine.setAttribute("stroke","rgb(220,220,255)");
+        NewLine.setAttribute("width", 2);
+      }
+      GridRoot.appendChild(NewLine);
+      hl += 1;
+    }
+    for (var x = 40; x <= w; x+=20) {
+      NewLine = SVGDoc.createElementNS(svgns,"line");
+      NewLine.setAttribute("x1", x);
+      NewLine.setAttribute("y1", 0); 
+      NewLine.setAttribute("x2", x);
+      NewLine.setAttribute("y2", (h-40));
+      if ( (wl  % 10) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(10,10,255)");
+        NewLine.setAttribute("width", 3);
+        NewText = SVGDoc.createElementNS(svgns,"text");
+        var data = SVGDoc.createTextNode(wl);
+        NewText.setAttribute("x", x-20);
+        NewText.setAttribute("y", h-5);
+        NewText.setAttribute("font-size", 16);
+        NewText.setAttribute("color", "black");
+        NewText.setAttribute("font-family", "arial");
+        NewText.setAttribute("text-anchor", "left");
+        NewText.appendChild(data);
+        TextRoot.appendChild(NewText);
+      } else if ( (wl  % 5) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(120,120,255)");
+        NewLine.setAttribute("width", 2);
+      } else {
+        NewLine.setAttribute("stroke","rgb(220,220,255)");
+        NewLine.setAttribute("width", 2);
+      }
+      GridRoot.appendChild(NewLine);
+      wl += 1;
+    }
+  }
+
+  function drawDots(evt){
+    for (var n = 2; n <= 30; n+=1){
+      for (var a = n; a <= 30; a += n) {
+        for (var b = n; b <= 30; b += n) {
+          NewDot = SVGDoc.createElementNS(svgns,"rect");
+          NewDot.setAttribute("id", "X"+a+","+b);
+          NewDot.setAttribute("x", 21 + b*20);
+          NewDot.setAttribute("y", h - 39 - a*20);
+          NewDot.setAttribute("width", 18);
+          NewDot.setAttribute("height", 18);
+          NewDot.setAttribute("fill", "rgb(10,10,100)");
+          NewDot.setAttribute("opacity", ".4");
+
+          Target=SVGDoc.getElementById("L_"+n); 
+          if ( Target != null ) {
+            Target.appendChild(NewDot);
+          }
+        }
+      }
+    }
+  } ]]> </script>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="rgb(255,255,250)"/>
+  <g id="Grid"/>
+  <g id="Dots"/>
+  <g id="Text"/>
+
+</svg>   
+

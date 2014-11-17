@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(30,30,30)"> 
+<!-- Author: Jan van der Meiden                                           -->
+<!-- jvdmeiden@gmail.com                                                  -->
+<!-- Version: 20141108.00                                                 -->
+<!-- Copyright (c) 2014 Jan van der Meiden.                               -->
+<!-- Copying and distribution of this file, with or without modification, -->
+<!-- are permitted in any medium without royalty provided the copyright   -->
+<!-- notice and this notice are preserved.                                -->
+
+<script><![CDATA[
+var SVGDoc = null;
+var svgns = 'http://www.w3.org/2000/svg';
+var offsetX = window.innerWidth/2;
+var offsetY = window.innerHeight/2;
+var myFactor = 0;
+var steps =0;
+
+
+function tick(evt){
+  steps = steps + 1; 
+  NewDot = SVGDoc.createElementNS(svgns,"circle"); 
+  NewDot.setAttribute("cx", offsetX+steps*Math.cos(2*Math.PI*myFactor*steps)/5); 
+  NewDot.setAttribute("cy", offsetY+steps*Math.sin(2*Math.PI*myFactor*steps)/5); 
+  NewDot.setAttribute("r", 2); 
+  NewDot.setAttribute("fill","rgb("+parseInt((steps%2)*200)+","+parseInt((steps/20)%255)+",255)"); 
+  dotRoot.appendChild(NewDot); 
+  t=setTimeout("tick()",5); 
+}   
+
+function submitFactor(evt){
+  console.log("UUUU");
+  element = document.getElementById("Dots");
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+  steps =0;
+  myFactor=(eval(document.getElementById( 'factor' ).value));
+  setTimeout("tick()",5);
+}
+
+function startup(evt){
+  SVGDoc = evt.target.ownerDocument;
+  dotRoot = SVGDoc.getElementById("Dots"); 
+}
+
+function toggleField(fieldName,nameIndex){
+  var hideObj=document.getElementsByName(fieldName)[nameIndex];
+  var showObj=document.getElementsByName(fieldName)[1-nameIndex];
+  hideObj.disabled=true;        
+  hideObj.style.display='none';
+  showObj.disabled=false;   
+  showObj.style.display='inline';
+  showObj.focus();
+}
+
+]]></script> 
+  <foreignObject id="form" x="100" y="50" width="300" height="150">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+	  <form onsubmit="return submitFactor()">
+	    <font color="white">
+        <label for="factor">Enter a factor as JavaScript, eg<br/> Math.E, Math.PI, 41/7, 1/5</label><br/>
+		</font>
+        <input type="text" id="factor"/>
+        <input type="submit" value="Submit"/>
+      </form>
+    </body>
+  </foreignObject>
+
+ <g id="Dots">
+ </g>
+</svg> 
+

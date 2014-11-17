@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Number Theoretic Spirals</title>
+<script>
+    function combo(thelist, factor) {
+        theinput = document.getElementById(factor);
+        var idx = thelist.selectedIndex;
+        var content = thelist.options[idx].innerHTML;
+        theinput.value = content;
+    }
+  </script>
+</head>
+<body id="body">
+<form>
+  <fieldset>
+    <legend>Parameters</legend>
+    <label>ColorSteps:</label>
+    <input type="number" id="inc" name="inc">
+  <p><input type="button" value="Run" onclick="submitFactor();" /><input type="button" value="Stop" onclick="stopSpiral();" /><input type="button" value="Continue" onclick="cont();" /></p>
+  </fieldset>
+</form>
+
+<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(10,10,10)" width="100%" height="100%"> 
+<!-- Author: Jan van der Meiden                                           -->
+<!-- jvdmeiden@gmail.com                                                  -->
+<!-- Version: 20141108.00                                                 -->
+<!-- Copyright (c) 2014 Jan van der Meiden.                               -->
+<!-- Copying and distribution of this file, with or without modification, -->
+<!-- are permitted in any medium without royalty provided the copyright   -->
+<!-- notice and this notice are preserved.                                -->
+
+<script><![CDATA[
+var SVGDoc = null;
+var svgns = 'http://www.w3.org/2000/svg';
+var offsetX = window.innerWidth/2;
+var offsetY = window.innerHeight/2;
+var myFactor = 0;
+var myInc = 0;
+var steps = 0;
+var fib = 0;
+var stop = false;
+
+function startup(evt){
+  SVGDoc = evt.target.ownerDocument;
+  dotRoot = SVGDoc.getElementById("Dots"); 
+}
+
+function stopSpiral(){
+  stop=true;
+}
+
+function cont(){
+  stop=false;
+  tick();
+}
+
+function tick(evt){
+  steps = steps + 1; 
+var i;
+for (i=0;i<myInc;i+=1){  
+  NewDot = SVGDoc.createElementNS(svgns,"circle"); 
+  var cx=5*steps*Math.cos(2*Math.PI*(i/myInc)*steps);
+  var cy=5*steps*Math.sin(2*Math.PI*(i/myInc)*steps);
+  NewDot.setAttribute("cx", offsetX+cx); 
+  NewDot.setAttribute("cy", offsetY+cy); 
+  NewDot.setAttribute("r", 1); 
+  NewDot.setAttribute("fill","rgb(250,250,200)"); 
+  dotRoot.appendChild(NewDot);
+}  
+  if ((cx*cx+cy*cy)<(offsetX*offsetX+offsetY*offsetY)&&stop==false){
+    t=setTimeout("tick()",100); 
+  }
+}   
+
+function submitFactor(evt){
+  element = document.getElementById("Dots");
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+  steps =0;
+  myInc=(eval(document.getElementById( 'inc' ).value));
+  setTimeout("tick()",5);
+}
+
+function toggleField(fieldName,nameIndex){
+  var hideObj=document.getElementsByName(fieldName)[nameIndex];
+  var showObj=document.getElementsByName(fieldName)[1-nameIndex];
+  hideObj.disabled=true;        
+  hideObj.style.display='none';
+  showObj.disabled=false;   
+  showObj.style.display='inline';
+  showObj.focus();
+}
+
+]]></script> 
+ <g id="Dots">
+ </g>
+</svg> 
+
+</body>
+</html>

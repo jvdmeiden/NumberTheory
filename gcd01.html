@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<title>Illustrated and Interactive Number Theory</title>
+<link href="jmn-simple.css" rel="stylesheet" type="text/css">
+
+<script src="Illustrated%20and%20Interactive%20Number%20Theory3_bestanden/ga.js" async="" type="text/javascript"></script><script type="text/javascript"> 
+  function toggle_layer(checkbox, element_name){
+    var svgobj = document.getElementById("GCD01").getSVGDocument().getElementById(element_name);
+    if (!checkbox.checked){
+      svgobj.setAttributeNS(null,'visibility','hidden');
+    } else {
+      svgobj.setAttributeNS(null,'visibility','visible');
+    }
+  }
+  
+  function setAll(){
+	for (n=2 ; n < 30 ; n++){
+	  var svgobj = document.getElementById("GCD01").getSVGDocument().getElementById("L_" + n); 
+	  svgobj.setAttributeNS(null,'visibility','visible');
+	  for (var i = 0;  i < document.hilite_form.elements.length;  i++){
+	    if (document.hilite_form.elements[i].type == 'checkbox'){
+	      document.hilite_form.elements[i].checked = true;
+	    }
+	  }
+	}	  
+  }
+  
+  function clearAll() {
+	for (n=2 ; n < 30 ; n++){
+	  var svgobj = document.getElementById("GCD01").getSVGDocument().getElementById("L_" + n); 
+	  svgobj.setAttributeNS(null,'visibility','hidden');
+	  for (var i = 0;  i < document.hilite_form.elements.length;  i++){
+	    if (document.hilite_form.elements[i].type == 'checkbox'){
+	      document.hilite_form.elements[i].checked = false;
+	    }
+	  }
+	}	  
+  }	  
+ 
+</script> 
+
+
+</head>
+
+<body>
+<div id="container">
+
+<div id="topnav">
+<a href="div01.html">Back</a> |
+<a href="index.html">Home</a> | 
+<a href="sqr01.html">Forward</a> 
+</div>
+
+<br/>
+
+
+
+
+<div id="hbody">
+<h1>Greatest Common Divisors</h1>
+Related to divisibility are 'Greatest Common Divisors'. The greatest 
+common divisor of two (or more) numbers is defined as: the largest
+number that divides those numbers. The Greatest Common Divisor of 10 and
+ 15 - notation GCD(10,15)- for instance is 5.<br/>
+The following graph shows if the Greatest Common Divisor of an integer pair is larger than one (dark squares). Through 
+this graph shimmer numerous patterns:
+
+<br/><br/>
+<object type="image/svg+xml" data="GCD.svg" height="1024" width="1024"> </object>
+<br/>
+<br/>
+
+<ul>
+<li> the diagonal stands out as a solid line, rather obvious number X and X itself have GCD X</li>
+<li> primes stand out as vertical - and horizontal - relatively white lines</li>
+<li> Y=2*X stands out as a straight line</li>
+<li> lots and lots of other patterns appear!</li>
+</ul>
+
+<form name="hilite_form" action=""> 
+  <table border="0" cellpadding="0" cellspacing="2"> 
+    <tbody><tr> 
+      <td>
+      </td><td>
+      </td><td><input checked="checked" value="" onclick="toggle_layer(this,'L_2')" type="checkbox">2</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_3')" type="checkbox">3</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_4')" type="checkbox">4</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_5')" type="checkbox">5</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_6')" type="checkbox">6</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_7')" type="checkbox">7</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_8')" type="checkbox">8</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_9')" type="checkbox">9</td> 
+    </tr> 
+    <tr> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_10')" type="checkbox">10</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_11')" type="checkbox">11</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_12')" type="checkbox">12</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_13')" type="checkbox">13</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_14')" type="checkbox">14</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_15')" type="checkbox">15</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_16')" type="checkbox">16</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_17')" type="checkbox">17</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_18')" type="checkbox">18</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_19')" type="checkbox">19</td> 
+    </tr> 
+    <tr> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_20')" type="checkbox">20</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_21')" type="checkbox">21</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_22')" type="checkbox">22</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_23')" type="checkbox">23</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_24')" type="checkbox">24</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_25')" type="checkbox">25</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_26')" type="checkbox">26</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_27')" type="checkbox">27</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_28')" type="checkbox">28</td> 
+      <td><input checked="checked" value="" onclick="toggle_layer(this,'L_29')" type="checkbox">29</td> 
+    </tr> 
+  </tbody></table> 
+  <script type="text/javascript">
+    // Make sure all checkboxes are checked whenever the page is reloaded in the browser.
+    for (var i = 0;  i < document.hilite_form.elements.length;  i++){
+      if (document.hilite_form.elements[i].type == 'checkbox'){
+        document.hilite_form.elements[i].checked = true;
+      }
+    }  
+ 
+  </script> 
+</form> 
+<button type="button" onclick="setAll()">Set All</button><button type="button" onclick="clearAll()">Clear All</button>
+<br/><br/>
+<object type="image/svg+xml" data="GCD01.svg" id="GCD01" align="middle" height="638" width="637">
+  <param name="src" value="GCD01.svg">
+  alt : <a href="GCD01.svg">It seems your browser does not support SVG. Consider using Google Chrome or another SVG enabled browser</a>
+</object><br/>
+
+</div>
+
+<div id="hlinks">
+<ul>
+<li><h1>My favorites</h1></li>
+<li><a href="http://www.divisorplot.com/">Beautiful number theory (divisorplot.com)</a></li>
+<li><a href="http://graffitiresearchlab.com/">Fun! (graffitiresearchlab.com)</a></li>
+<li><a href="http://radicalart.info/">Lots of art (radicalart.info)</a></li>
+<li><a href="http://www.michaelbach.de/ot/index.html">Optical illusions (michaelbach.de)</a></li>
+<li><a href="http://processing.org/">Electronic Sketchbook using Java (processing.org)</a></li>
+<li><a href="http://complexification.net/">Computational art (complexification.net)</a></li>
+<li><a href="http://www.aaronkoblin.com/work.html">Interactive Art (aaronkoblin.com)</a>
+</li><li><h1>Personal Links</h1></li>
+<li><a href="http://vector-graphics.appspot.com/">Vector Graphics, an introduction to making interactive SVG</a></li>
+<li><a href="mailto:jvdmeiden@googlemail.com">Contact</a></li>
+<li><a href="http://twitter.com/jmeiden">Author on Twitter</a></li>
+<li><a href="http://janvandermeiden.blogspot.com/">Personal blog</a></li>
+<li><a href="http://integerplot.blogspot.com/">Blog on plotting integers</a></li>
+<li><a href="http://www.linkedin.com/in/janvandermeiden">Author on LinkedIn</a></li>
+</ul>
+</div>
+
+<br/>
+<div id="botnav">
+<a href="div01.html">Back</a> |
+<a href="index.html">Home</a> | 
+<a href="sqr01.html">Forward</a> 
+</div>
+<br/>
+
+<div id="footer" class="footer_text"><strong>Copyright © 2011</strong>Jan van der Meiden <br/>
+<a href="http://kingjbible.com/john/1.htm">And the light shineth in darkness; and the darkness comprehended it not.</a><br/><br/>
+</div>
+
+
+</div></body></html>

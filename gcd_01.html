@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Illustrated and Interactive Number Theory</title>
+<link href="css/jmn-simple.css" rel="stylesheet" type="text/css" />
+<meta name="google-site-verification" content="MUVAS1eFhiXNT3PNggX2cEf45k1gP0cHVZJCgG00VAg" />
+
+
+<script type="text/javascript"> 
+  function toggle_layer(checkbox, element_name){
+    var svgobj = document.getElementById("GCD01").getSVGDocument().getElementById(element_name);
+    if (!checkbox.checked){
+      svgobj.setAttributeNS(null,'visibility','hidden');
+    } else {
+      svgobj.setAttributeNS(null,'visibility','visible');
+    }
+  }
+  
+  function setAll(){
+	for (n=2 ; n < 30 ; n++){
+	  var svgobj = document.getElementById("GCD01").getSVGDocument().getElementById("L_" + n); 
+	  svgobj.setAttributeNS(null,'visibility','visible');
+	  for (var i = 0;  i < document.hilite_form.elements.length;  i++){
+	    if (document.hilite_form.elements[i].type == 'checkbox'){
+	      document.hilite_form.elements[i].checked = true;
+	    }
+	  }
+	}	  
+  }
+  
+  function clearAll() {
+	for (n=2 ; n < 30 ; n++){
+	  var svgobj = document.getElementById("GCD01").getSVGDocument().getElementById("L_" + n); 
+	  svgobj.setAttributeNS(null,'visibility','hidden');
+	  for (var i = 0;  i < document.hilite_form.elements.length;  i++){
+	    if (document.hilite_form.elements[i].type == 'checkbox'){
+	      document.hilite_form.elements[i].checked = false;
+	    }
+	  }
+	}	  
+  }	  
+ 
+</script> 
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20509282-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body>
+<form name="hilite_form" action="" > 
+  <table border="0" cellpadding="0" cellspacing="2"> 
+    <tr> 
+      <td/>
+      <td/>
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_2')">2</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_3')">3</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_4')">4</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_5')">5</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_6')">6</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_7')">7</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_8')">8</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_9')">9</td> 
+    </tr> 
+    <tr> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_10')">10</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_11')">11</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_12')">12</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_13')">13</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_14')">14</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_15')">15</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_16')">16</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_17')">17</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_18')">18</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_19')">19</td> 
+    </tr> 
+    <tr> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_20')">20</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_21')">21</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_22')">22</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_23')">23</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_24')">24</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_25')">25</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_26')">26</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_27')">27</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_28')">28</td> 
+      <td><input type="checkbox" value="" onclick="toggle_layer(this,'L_29')">29</td> 
+    </tr> 
+  </table> 
+  <script type="text/javascript">
+    // Make sure all checkboxes are checked whenever the page is reloaded in the browser.
+    for (var i = 0;  i < document.hilite_form.elements.length;  i++){
+      if (document.hilite_form.elements[i].type == 'checkbox'){
+        document.hilite_form.elements[i].checked = true;
+      }
+    }  
+ 
+  </script> 
+</form> 
+<button type="button" onclick=setAll() >Set All</button><button type="button" onclick=clearAll() >Clear All</button>
+<br/><br/>
+<object type="image/svg+xml" data="GCD01.svg" id="GCD01" width="637" height="638" align="middle">
+  <param name="src" value="GCD01.svg"/>
+  alt : <a href="GCD01.svg">It seems your browser does not support SVG. Consider using Google Chrome or another SVG 
+  enabled browser</a>
+</object><br/>
+
+
+</body>
+</html>
