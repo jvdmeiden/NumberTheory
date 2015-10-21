@@ -13,14 +13,16 @@
 <body id="body">
 <form>
   <fieldset>
+     <font color="white">
     <legend>Parameters</legend>
-    <label>ColorSteps:</label>
+    <label>Denominator/<label>
     <input type="number" id="inc" name="inc">
   <p><input type="button" value="Run" onclick="submitFactor();" /><input type="button" value="Stop" onclick="stopSpiral();" /><input type="button" value="Continue" onclick="cont();" /></p>
   </fieldset>
+  </font>
 </form>
 
-<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(10,10,10)" width="100%" height="100%"> 
+<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(10,10,10)" width="900" height="900">
 <!-- Author: Jan van der Meiden                                           -->
 <!-- jvdmeiden@gmail.com                                                  -->
 <!-- Version: 20141108.00                                                 -->
@@ -32,8 +34,10 @@
 <script><![CDATA[
 var SVGDoc = null;
 var svgns = 'http://www.w3.org/2000/svg';
-var offsetX = window.innerWidth/2;
-var offsetY = window.innerHeight/2;
+// var offsetX = window.innerWidth/2;
+// var offsetY = window.innerHeight/2;
+var offsetX = 450;
+var offsetY = 450;
 var myFactor = 0;
 var myInc = 0;
 var steps = 0;

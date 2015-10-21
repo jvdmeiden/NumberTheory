@@ -75,8 +75,8 @@ function tick(evt){
   NewDot = SVGDoc.createElementNS(svgns,"circle"); 
 //  var cx=Math.sqrt(steps)*Math.cos(2*Math.PI*myFactor*steps)*5;
 //  var cy=Math.sqrt(steps)*Math.sin(2*Math.PI*myFactor*steps)*5;
-  var cx=(steps/10)*Math.cos(2*Math.PI*myFactor*steps);
-  var cy=(steps/10)*Math.sin(2*Math.PI*myFactor*steps);
+  var cx=(steps/4)*Math.cos(2*Math.PI*myFactor*steps);
+  var cy=(steps/4)*Math.sin(2*Math.PI*myFactor*steps);
   NewDot.setAttribute("cx", offsetX+cx); 
   NewDot.setAttribute("cy", offsetY+cy); 
 //  console.log("Steps: "+steps+" Factor: "+myFactor+" cx,cy "+cx+","+cy);

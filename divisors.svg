@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" onresize="resize(evt)" onzoom="resize(evt)" onload="startup(evt)" width="100%" height="100%">  
+<!--
+  Author: Jan van der Meiden
+  jvdmeiden@googlemail.com
+  Version: 20110118.01  Copyright 2011 Jan van der Meiden.
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.-->
+<!--
+  About this SVG file:
+  It contains a number of 'layers':
+  -  A 'GridRoot' for the underlying grid to be drawn
+     I made an attempt to make it look like classic millimeter paper
+  -  A DotRoot for the dots (on top of the lines)
+  -  A TextRoot
+
+  -  The file contains an attempt to support resizing
+    Considering the resizing: it appears to work well in Opera 11, Minefield and IE9 Beta.
+    However when zooming out it appears the way the image is calculated becomes too compute intensive...
+
+  -  The file contains an attempt to do some animations and buttons
+     buttons.... it is a start... Should do timer events better...
+    
+-->
+
+<script type="application/ecmascript"> <![CDATA[
+  var SVGDoc = null;
+  var SVGRoot = null;
+  var count=0;
+  var svgns = 'http://www.w3.org/2000/svg';
+  var h = 0;  
+  var w = 0;  
+  var hl = 0;  
+  var wl = 0;
+  var offset = 0;
+  var inc = 0;
+
+  function startup(evt){
+    SVGDoc = evt.target.ownerDocument; 
+    SVGRoot = evt.target;
+    var Box = SVGRoot.getBBox();
+    w = Box.width;
+    h = Box.height;
+    GridRoot = SVGDoc.getElementById("Grid");
+    DotRoot = SVGDoc.getElementById("Dots");
+    TextRoot = SVGDoc.getElementById("Text");
+    drawGrid();
+    drawDots();
+    writeText();
+    t=setTimeout("tick()",50); 
+  }
+  
+ 
+  function tick(){ 
+    hl = 0;
+    wl = 0;
+    offset += inc ;
+    removeChildrenFromNode(TextRoot);
+    writeText();
+    if (inc != 0) {
+      removeChildrenFromNode(DotRoot);
+      drawDots();
+    }
+
+    t=setTimeout("tick()",50); 
+  } 
+ 
+
+  function removeChildrenFromNode(node){
+    while (node.hasChildNodes()){
+      node.removeChild(node.firstChild);
+    }
+  }
+
+  function resize(evt){
+    var Box = SVGRoot.getBBox();
+    w = Box.width;
+    h = Box.height;
+    removeChildrenFromNode(GridRoot);
+    removeChildrenFromNode(DotRoot);
+    removeChildrenFromNode(TextRoot);
+    hl = 0;
+    wl = 0;
+    drawGrid();
+    writeText();
+    drawDots();
+  }
+
+  function Goleft() {
+    inc -=1 ;
+  }
+ 
+  function Goright() {
+    inc += 1;
+  }
+
+  function Stop() {
+    inc = 0;
+  }
+
+  function Highlight(evt)  
+  {  
+    evt.target.setAttribute("opacity", "0.0");  
+  }  
+
+  function Unlight(evt)  
+  {  
+    evt.target.setAttribute("opacity", "0.4");  
+  }  
+
+
+  function drawGrid(){
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "Shade1");
+    NewButton.setAttribute("x", 15);
+    NewButton.setAttribute("y", h - 44);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("fill", "rgb(200,200,200)");
+    NewButton.setAttribute("opacity", "1.0");
+    GridRoot.appendChild(NewButton);
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "Left");
+    NewButton.setAttribute("x", 10);
+    NewButton.setAttribute("y", h - 49);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("style", "fill:url(#but);stroke-width:1;stroke:rgb(0,0,0)");
+    NewButton.setAttribute("opacity", "1.0");
+    GridRoot.appendChild(NewButton);
+    var data = SVGDoc.createTextNode("<<<");
+    NewText = SVGDoc.createElementNS(svgns,"text");
+    NewText.setAttribute("font-size", 55);
+    NewText.setAttribute("x", 100);
+    NewText.setAttribute("y", h-9);
+    NewText.setAttribute("fill", "white");
+    NewText.setAttribute("stroke", "white");
+    NewText.setAttribute("font-family", "arial");
+    NewText.setAttribute("text-anchor", "middle");
+    NewText.appendChild(data);
+    GridRoot.appendChild(NewText);
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "LeftA");
+    NewButton.setAttribute("x", 10);
+    NewButton.setAttribute("y", h - 49);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("style", "fill:url(#but);stroke-width:1;stroke:rgb(255,255,255)");
+    NewButton.setAttribute("opacity", "0.4");
+    NewButton.setAttribute("onclick", "Goleft()");
+    NewButton.setAttribute("onmouseover", "Highlight(evt)");
+    NewButton.setAttribute("onmouseout", "Unlight(evt)"); 
+    GridRoot.appendChild(NewButton);
+
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "Shade2");
+    NewButton.setAttribute("x", w/2 - 85);
+    NewButton.setAttribute("y", h - 44);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("fill", "rgb(200,200,200)");
+    NewButton.setAttribute("opacity", "1.0");
+    GridRoot.appendChild(NewButton);
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "Stop");
+    NewButton.setAttribute("x", w/2-90);
+    NewButton.setAttribute("y", h - 49);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("style", "fill:url(#but);stroke-width:1;stroke:rgb(0,0,0)");
+    NewButton.setAttribute("opacity", "1.0");
+    GridRoot.appendChild(NewButton);
+    var data = SVGDoc.createTextNode("||||");
+    NewText = SVGDoc.createElementNS(svgns,"text");
+    NewText.setAttribute("font-size", 40);
+    NewText.setAttribute("x", w/2 );
+    NewText.setAttribute("y", h-19);
+    NewText.setAttribute("fill", "white");
+    NewText.setAttribute("stroke", "white");
+    NewText.setAttribute("font-family", "arial");
+    NewText.setAttribute("text-anchor", "middle");
+    NewText.appendChild(data);
+    GridRoot.appendChild(NewText);
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "StopA");
+    NewButton.setAttribute("x", w/2-90);
+    NewButton.setAttribute("y", h - 49);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("style", "fill:url(#but);stroke-width:1;stroke:rgb(255,255,255)");
+    NewButton.setAttribute("opacity", "0.4");
+    NewButton.setAttribute("onclick", "Stop()");
+    NewButton.setAttribute("onmouseover", "Highlight(evt)");
+    NewButton.setAttribute("onmouseout", "Unlight(evt)"); 
+    GridRoot.appendChild(NewButton);
+
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "Shade3");
+    NewButton.setAttribute("x", w-190);
+    NewButton.setAttribute("y", h - 44);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("fill", "rgb(200,200,200)");
+    NewButton.setAttribute("opacity", "1.0");
+    GridRoot.appendChild(NewButton);
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "Right");
+    NewButton.setAttribute("x", w-195);
+    NewButton.setAttribute("y", h - 49);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("style", "fill:url(#but);stroke-width:1;stroke:rgb(0,0,0)");
+    NewButton.setAttribute("opacity", "1.0");
+    GridRoot.appendChild(NewButton);
+    var data = SVGDoc.createTextNode(">>>");
+    NewText = SVGDoc.createElementNS(svgns,"text");
+    NewText.setAttribute("font-size", 55);
+    NewText.setAttribute("x", w-100);
+    NewText.setAttribute("y", h-9);
+    NewText.setAttribute("fill", "white");
+    NewText.setAttribute("stroke", "white");
+    NewText.setAttribute("font-family", "arial");
+    NewText.setAttribute("text-anchor", "middle");
+    NewText.appendChild(data);
+    GridRoot.appendChild(NewText);
+    NewButton = SVGDoc.createElementNS(svgns,"rect");
+    NewButton.setAttribute("id", "RightA");
+    NewButton.setAttribute("x", w-195);
+    NewButton.setAttribute("y", h - 49);
+    NewButton.setAttribute("rx", 10);
+    NewButton.setAttribute("ry", 10);
+    NewButton.setAttribute("width", 180);
+    NewButton.setAttribute("height", 40);
+    NewButton.setAttribute("style", "fill:url(#but);stroke-width:1;stroke:rgb(255,255,255)");
+    NewButton.setAttribute("opacity", "0.4");
+    NewButton.setAttribute("onclick", "Goright()");
+    NewButton.setAttribute("onmouseover", "Highlight(evt)");
+    NewButton.setAttribute("onmouseout", "Unlight(evt)"); 
+    GridRoot.appendChild(NewButton);
+
+    for (var y = (h-80); y > 0; y-=10){
+      NewLine = SVGDoc.createElementNS(svgns,"line");
+      NewLine.setAttribute("x1", 30);
+      NewLine.setAttribute("y1", y);
+      NewLine.setAttribute("x2", w);
+      NewLine.setAttribute("y2", y);
+      if ( (hl % 10) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(10,10,255)");
+        NewLine.setAttribute("width", 1);
+      } else if ( (hl % 5) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(120,120,255)");
+        NewLine.setAttribute("width", 1);
+      } else {
+        NewLine.setAttribute("stroke","rgb(220,220,255)");
+        NewLine.setAttribute("width", 1);
+      }
+      GridRoot.appendChild(NewLine);
+      hl += 1;
+    }
+    for (var x = 30; x <= w; x+=10) {
+      NewLine = SVGDoc.createElementNS(svgns,"line");
+      NewLine.setAttribute("x1", x);
+      NewLine.setAttribute("y1", 0); 
+      NewLine.setAttribute("x2", x);
+      NewLine.setAttribute("y2", (h-80));
+      if ( (wl  % 10) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(10,10,255)");
+        NewLine.setAttribute("width", 1);
+      } else if ( (wl  % 5) == 0 ) {
+        NewLine.setAttribute("stroke","rgb(120,120,255)");
+        NewLine.setAttribute("width", 1);
+      } else {
+        NewLine.setAttribute("stroke","rgb(220,220,255)");
+        NewLine.setAttribute("width", 1);
+      }
+      GridRoot.appendChild(NewLine);
+      wl += 1;
+    }
+  }
+
+  function writeText() {
+    for (var y = (h-80); y > 0; y-=100){
+      var data = SVGDoc.createTextNode(hl);
+      NewText = SVGDoc.createElementNS(svgns,"text");
+      NewText.setAttribute("x", 4);
+      NewText.setAttribute("y", y+10);
+      NewText.setAttribute("font-size", 12);
+      NewText.setAttribute("color", "black");
+      NewText.setAttribute("font-family", "arial");
+      NewText.appendChild(data);
+      TextRoot.appendChild(NewText);
+      hl += 10;
+    }
+    for (var x = 30; x <= w; x+=100) {
+      NewText = SVGDoc.createElementNS(svgns,"text");
+      var data = SVGDoc.createTextNode(wl+offset);
+      NewText.setAttribute("x", x-10);
+      NewText.setAttribute("y", h-56);
+      NewText.setAttribute("font-size", 12);
+      NewText.setAttribute("color", "black");
+      NewText.setAttribute("font-family", "arial");
+      NewText.setAttribute("text-anchor", "left");
+      NewText.appendChild(data);
+      TextRoot.appendChild(NewText);
+      wl += 10;
+    }
+
+    NewText = SVGDoc.createElementNS(svgns,"text");
+    var data = SVGDoc.createTextNode("Speed: "+inc);
+    NewText.setAttribute("x", w/2+100);
+    NewText.setAttribute("y", h - 19);
+    NewText.setAttribute("font-size", 24);
+    NewText.setAttribute("color", "blue");
+    NewText.setAttribute("font-family", "arial");
+    NewText.setAttribute("text-anchor", "left");
+    NewText.appendChild(data);
+    TextRoot.appendChild(NewText);
+  }
+
+  function drawDots(){
+    for (var a = 1; a <= hl; a += 1) {
+      for (var b = 1; b <= wl; b += 1) {
+        if ( (b + offset) % a == 0) {
+          NewDot = SVGDoc.createElementNS(svgns,"rect");
+          NewDot.setAttribute("id", "X"+a+","+b);
+          NewDot.setAttribute("x", 21 + b*10);
+          NewDot.setAttribute("y", h - 79 - a*10);
+          NewDot.setAttribute("width", 8);
+          NewDot.setAttribute("height", 8);
+          NewDot.setAttribute("fill", "rgb(10,10,10)");
+          NewDot.setAttribute("opacity", "1.0");
+          DotRoot.appendChild(NewDot);
+        }
+
+      }
+    }
+  } ]]> </script>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="rgb(255,255,250)"/>
+  <g id="Grid"></g>
+  <g id="Dots"></g>
+  <g id="Text"></g>
+
+</svg>
