@@ -42,6 +42,9 @@
     for (var n=2; n<30; n++) {
       NewGroup = SVGDoc.createElementNS(svgns,"g");
       NewGroup.setAttribute("id", "L_" + n );
+      if (n>2){
+        NewGroup.setAttribute("visibility", "hidden" );
+      }
       DotsRoot.appendChild(NewGroup);
     }
     TextRoot = SVGDoc.getElementById("Text");
