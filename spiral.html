@@ -15,26 +15,21 @@
   <fieldset>
     <font color="white">
     <legend>Parameters</legend>
-    <label>ColorSteps:</label>
+    <label>Scale:</label>	
+   <input type="number" id="scale" name="scale" value=6/>
+    <label>ColorSteps:</label>	
+   <input type="number" id="inc" name="inc" value=7/>
   <label>Steps per color:</label>
-    <input type="number" id="inc" name="inc">
-    <select name="thelist" onChange="combo(this, 'inc')">
-      <option>1</option>
-      <option>4</option>
-      <option selected>7</option>
-      <option>10</option>
-      <option>16</option>
-    </select><br/>	
-  <label>Factor (in Javascript notation, eg Math.PI):</label>
-    <input type="text" id="factor" name="factor" />
-    <select name="thelist" onChange="combo(this, 'factor')">
-      <option>1/7</option>
-      <option selected>Math.PI</option>
-      <option>Math.sqrt(3)</option>
-      <option>(1+Math.sqrt(5))/2</option>
-      <option>Math.E</option>
-      <option>Math.sqrt(511)</option>
-    </select>
+   <label>Factor (in Javascript notation, eg Math.PI):</label>
+    <input type="text" id="factor" name="factor" list="factorList" value="(1+Math.sqrt(5))/2"/>
+    <datalist id="factorList">
+      <option value="1/7">
+      <option value="Math.PI">
+      <option value="Math.sqrt(3)">
+      <option value="(1+Math.sqrt(5))/2">
+      <option value="Math.E">
+      <option value="Math.sqrt(511)">
+    </datalist>
   <p><input type="button" value="Run" onclick="submitFactor();" /><input type="button" value="Stop" onclick="stopSpiral();" /><input type="button" value="Continue" onclick="cont();" /></p>
   </font>
   </fieldset>
@@ -75,16 +70,18 @@ function tick(evt){
   NewDot = SVGDoc.createElementNS(svgns,"circle"); 
 //  var cx=Math.sqrt(steps)*Math.cos(2*Math.PI*myFactor*steps)*5;
 //  var cy=Math.sqrt(steps)*Math.sin(2*Math.PI*myFactor*steps)*5;
-  var cx=(steps/4)*Math.cos(2*Math.PI*myFactor*steps);
-  var cy=(steps/4)*Math.sin(2*Math.PI*myFactor*steps);
+  var cx=(Math.sqrt(steps)*scale)*Math.cos(2*Math.PI*myFactor*steps);
+  var cy=(Math.sqrt(steps)*scale)*Math.sin(2*Math.PI*myFactor*steps);
   NewDot.setAttribute("cx", offsetX+cx); 
   NewDot.setAttribute("cy", offsetY+cy); 
 //  console.log("Steps: "+steps+" Factor: "+myFactor+" cx,cy "+cx+","+cy);
-  NewDot.setAttribute("r", 2); 
-  NewDot.setAttribute("fill","rgb(255,"+parseInt((steps%myInc)*255/myInc)+","+parseInt((steps/100)%255)+")"); 
+  NewDot.setAttribute("r", scale/2); 
+  NewDot.setAttribute("opacity", 0.8); 
+//  NewDot.setAttribute("fill","rgb(255,"+parseInt((steps%myInc)*255/myInc)+","+parseInt((steps/100)%255)+")"); 
+  NewDot.setAttribute("fill","rgb(0,"+parseInt((steps%myInc)*255/myInc)+",255)"); 
   dotRoot.appendChild(NewDot); 
   if ((cx*cx+cy*cy)<(offsetX*offsetX+offsetY*offsetY)&&stop==false){
-    t=setTimeout("tick()",3); 
+    t=setTimeout("tick()",scale-1); 
   }
 }   
 
@@ -96,7 +93,8 @@ function submitFactor(evt){
   steps =0;
   myFactor=(eval(document.getElementById( 'factor' ).value));
   myInc=(eval(document.getElementById( 'inc' ).value));
-  setTimeout("tick()",5);
+  scale=(eval(document.getElementById( 'scale' ).value));
+  setTimeout("tick()",scale-1);
 }
 
 function startup(evt){
@@ -121,3 +119,4 @@ function toggleField(fieldName,nameIndex){
 
 </body>
 </html>
+
