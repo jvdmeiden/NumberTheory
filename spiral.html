@@ -18,16 +18,16 @@
 </head>
 <body >
 <div class="container">
-  <h1>Seed Spirals</h1>
   <div class="row">
   <div class="col-sm-4">
+  <h1>Seed Spirals</h1>
   <form>
     <fieldset>
     <legend>Parameters</legend>
     <label class="name">Scale:</label>	
-    <input class="button" type="number" id="scale" name="scale" value=6/>
+    <input class="button" type="number" id="scale" name="scale" value="6"/>
     <label class="name">ColorSteps:</label>	
-    <input class="button" type="number" id="inc" name="inc" value=7/>
+    <input class="button" type="number" id="inc" name="inc" value="7"/>
     <label class="name">Factor (in Javascript notation, eg Math.PI):</label>
     <input class="button" type="text" id="factor" name="factor" list="factorList" value="(1+Math.sqrt(5))/2"/>
     <datalist id="factorList">
@@ -47,7 +47,7 @@
   <div class="col-sm-8">
   <div class="map">
 
-<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(10,10,10)" width="900" height="900"> 
+<svg xmlns="http://www.w3.org/2000/svg" onload="startup(evt)" style="background-color: rgb(10,10,10)" width="850" height="850"> 
 <!-- Author: Jan van der Meiden                                           -->
 <!-- jvdmeiden@gmail.com                                                  -->
 <!-- Version: 20141108.00                                                 -->
@@ -59,8 +59,8 @@
 <script><![CDATA[
 var SVGDoc = null;
 var svgns = 'http://www.w3.org/2000/svg';
-var offsetX = 450;
-var offsetY = 450;
+var offsetX = 425;
+var offsetY = 425;
 var myFactor = 0;
 var myInc = 0;
 var steps = 0;
